@@ -42,8 +42,51 @@
     </select>
     </div>
     <div id="map"></div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5jMe-RxMEN4ECFgDH5j51ulFe_UZmfGA&callback=initMap">
+    </script>
+    <script src="commuteRoutes.js"></script>
     <script>
-      function initMap() {
+
+
+        function initMap() {
+          var map = new google.maps.Map(document.getElementById("map"));
+          var directionsService = new google.maps.DirectionsService;
+
+          function renderDirections(result) {
+            var directionsRenderer = new google.maps.DirectionsRenderer;
+            directionsRenderer.setMap(map);
+            directionsRenderer.setDirections(result);
+          }
+
+                  
+          function requestDirections(startLat, startLong, endLat, endLong) {
+            directionsService.route({
+              origin: {lat: startLat, lng: startLong},
+              destination: {lat: endLat, lng: endLong},
+              travelMode: google.maps.DirectionsTravelMode.DRIVING //google.maps.TravelMode[selectedMode]
+            }, function(result) {
+              renderDirections(result);
+            });
+          }
+
+          var coordinates = [
+              [-1.9458919, 30.053146, -1.959158, 30.064659],
+              [-1.9454595, 30.052542, -1.942566, 30.062317]
+            ];
+      
+          for (var i = 0; i < coordinates.length; i++) {
+            requestDirections(coordinates[i][0], coordinates[i][1], 
+                              coordinates[i][2], coordinates[i][3]);
+          }
+
+
+        }
+
+
+  
+/*      function initMap() {
         var directionsDisplay = new google.maps.DirectionsRenderer;
         var directionsService = new google.maps.DirectionsService;
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -61,31 +104,28 @@
           [-1.9458919, 30.053146, -1.959158, 30.064659],
           [-1.9454595, 30.052542, -1.942566, 30.062317]
         ];
-        function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
         var selectedMode = document.getElementById('mode').value;
           for (var i = 0; i < coordinates.length; i++) { 
-          //for (var j = 0; j<1; j++) {
-            directionsService.route({
-          origin: {lat: coordinates[i][0], lng: coordinates[i][1]},  // Haight.
-          destination: {lat: coordinates[i][2], lng: coordinates[i][3]},  // Ocean Beach.
-          // Note that Javascript allows us to access the constant
-          // using square brackets and a string value as its
-          // "property."
-          travelMode: google.maps.TravelMode[selectedMode]
-        }, function(response, status) {
-          if (status == 'OK') {
-            directionsDisplay.setDirections(response);
-          } else {
-            window.alert('Directions request failed due to ' + status);
-          }
-        });
+            //for (var j = 0; j<1; j++) {
+              directionsService.route({
+            origin: {lat: coordinates[i][0], lng: coordinates[i][1]},  // Haight.
+            destination: {lat: coordinates[i][2], lng: coordinates[i][3]},  // Ocean Beach.
+            // Note that Javascript allows us to access the constant
+            // using square brackets and a string value as its
+            // "property."
+            travelMode: google.maps.TravelMode[selectedMode]
+          }, function(response, status) {
+            if (status == 'OK') {
+              directionsDisplay.setDirections(response);
+            } else {
+              window.alert('Directions request failed due to ' + status);
+            }
+          });
 
           //}
         }
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5jMe-RxMEN4ECFgDH5j51ulFe_UZmfGA&callback=initMap">
+      }*/
     </script>
   </body>
 </html>
