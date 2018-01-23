@@ -41,47 +41,71 @@
       <option value="TRANSIT">Transit</option>
     </select>
     </div>
+    <!-- <div id="directions_detail"></div>--> <!-- display textual directions on the map-->
     <div id="map"></div>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5jMe-RxMEN4ECFgDH5j51ulFe_UZmfGA&callback=initMap">
     </script>
-    <script src="commuteRoutes.js"></script>
+    <script src="/javascript/commuteRoutes.js"></script>
     <script>
-
 
         function initMap() {
           var map = new google.maps.Map(document.getElementById("map"));
           var directionsService = new google.maps.DirectionsService;
 
+
           function renderDirections(result) {
-            var directionsRenderer = new google.maps.DirectionsRenderer;
+            var directionsRenderer = new google.maps.DirectionsRenderer();
             directionsRenderer.setMap(map);
             directionsRenderer.setDirections(result);
+            //directionsRenderer.setPanel(document.getElementById("directions_detail")); //display textual directions
           }
 
-                  
+            /*
+            // writing to excel file 
+            var fileName = "routes.xlsx";
+            var sheetName = "Sheet1"; 
+            var app = getActiveXObject("Excel.Application");
+            app.Visible = "True";
+            var book = app.Workbooks.Open(fileName);
+            var sheet = book.Sheets.Item(sheetName);
+            rowCount = app.ActiveSheet.UsedRange.Rows.Count + 1;
+            colCount = 1;
+            app.Cells.Item(1,1).Value2 = "test";  */
+
           function requestDirections(startLat, startLong, endLat, endLong) {
             directionsService.route({
               origin: {lat: startLat, lng: startLong},
               destination: {lat: endLat, lng: endLong},
               travelMode: google.maps.DirectionsTravelMode.DRIVING //google.maps.TravelMode[selectedMode]
             }, function(result) {
+                //for (var i =0; i < result.routes[0].legs[0].steps.length; i++){
+                      //console.log(result.routes[0].legs[0].steps[i].instructions);
+
+            //}
+              //console.log(result)
               renderDirections(result);
             });
           }
-
           var coordinates = [
-              [-1.9458919, 30.053146, -1.959158, 30.064659],
-              [-1.9454595, 30.052542, -1.942566, 30.062317]
-            ];
-      
+[-1.9587986,30.0576270,-1.9577550,30.0584200],
+[-1.9580858,30.0584640,-1.9446680,30.0589590],
+[-1.9586018,30.0585230,-1.9606990,30.1085980],
+[-1.9583515,30.0573290,-1.9431220,30.0599490],
+[-1.9584557,30.0586850,-1.9577550,30.0584200],
+[-1.9578688,30.0586260,-1.9455260,30.0581860],
+[-1.9582618,30.0582730,-1.9646660,30.0598860],
+[-1.9571900,30.0557230,-1.8430100,30.1927010],
+[-1.9566939,30.0553610,-1.9196890,30.0970490],
+[-1.9570730,30.0561980,-1.9558560,30.0604690],
+];
+          console.log(coordinates)
           for (var i = 0; i < coordinates.length; i++) {
+            //console.log(coordinates.length)
             requestDirections(coordinates[i][0], coordinates[i][1], 
                               coordinates[i][2], coordinates[i][3]);
           }
-
-
         }
 
 
