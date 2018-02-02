@@ -50,18 +50,22 @@
     </script>
 
     <script>
-
+      var delay = 0;
+      
         function initMap() {
           var map = new google.maps.Map(document.getElementById("map"));
+          //var transitLayer = new google.maps.TransitLayer();
+          //transitLayer.setMap(map);
           var directionsService = new google.maps.DirectionsService;
 
 
-          function renderDirections(result) {
+         function renderDirections(result) {
             var directionsRenderer = new google.maps.DirectionsRenderer();
             directionsRenderer.setMap(map);
             directionsRenderer.setDirections(result);
             directionsRenderer.setPanel(document.getElementById("directions_detail")); //display textual directions
           }
+          //next()
 
             /*
             // writing to excel file 
@@ -75,29 +79,39 @@
             colCount = 1;
             app.Cells.Item(1,1).Value2 = "test";  */
 
-          function requestDirections(startLat, startLong, endLat, endLong) {
+           function requestDirections(startLat, startLong, endLat, endLong) {
+            var selectedMode = document.getElementById('mode').value;
             directionsService.route({
               origin: {lat: startLat, lng: startLong},
               destination: {lat: endLat, lng: endLong},
-              travelMode: google.maps.DirectionsTravelMode.DRIVING //google.maps.TravelMode[selectedMode]
-            }, function(result) {
-                //for (var i =0; i < result.routes[0].legs[0].steps.length; i++){
-                      //console.log(result.routes[0].legs[0].steps[i].instructions);
-
-            //}
-              //console.log(result)
-              renderDirections(result);
+              //travelMode: google.maps.DirectionsTravelMode.DRIVING 
+              travelMode: google.maps.TravelMode[selectedMode] //google.maps.TravelMode[selectedMode]
+            }, function(result, status) {
+               if (status == "OK") {
+                renderDirections(result);
+               } else {
+                        
+                       if (status == "OVER_QUERY_LIMIT") {
+                        
+                        delay++;
+                       setTimeout(function () {
+                        requestDirections(startLat, startLong, endLat, endLong);}, delay * 1000);
+                       } else {
+                          console.log("Directions request failed:" + status);
+                       }
+                        
+                      }
             });
           }
-
-          for (var i = 0; i < coordinates.length; i++) {
-            //console.log(coordinates.length)
-            requestDirections(coordinates[i].startLat, coordinates[i].startLong, 
+          
+        for (var i = 0; i < coordinates.length; i++) {
+           requestDirections(coordinates[i].startLat, coordinates[i].startLong, 
                               coordinates[i].endLat, coordinates[i].endLong);
-          }
+      }
+    }
 
-        }
 
+        //setTimeout(requestDirections,2000)
 
   
 /*      function initMap() {
