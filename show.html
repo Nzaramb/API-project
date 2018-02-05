@@ -41,14 +41,14 @@
       <option value="TRANSIT">Transit</option>
     </select>
     </div>
-    <!-- <div id="directions_detail"></div>--> <!-- display textual directions on the map-->
+    <!--<div id="directions_detail"></div>--> <!-- display textual directions on the map-->
     <div id="map"></div>
     <script src="/javascript/commuteRoutes.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5jMe-RxMEN4ECFgDH5j51ulFe_UZmfGA&callback=initMap">
     </script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
       var delay = 0;
       
@@ -64,8 +64,22 @@
             directionsRenderer.setMap(map);
             directionsRenderer.setDirections(result);
             directionsRenderer.setPanel(document.getElementById("directions_detail")); //display textual directions
-          }
-          //next()
+             //var checkboxArray = document.getElementById('waypoints');
+            //console.log(result.routes[0].legs[0]);
+            var myRoute = result.routes[0].legs[0]
+
+
+             for (var i = 0; i < myRoute.steps.length; i++) {
+              var data = { "instr": myRoute.steps[i].instructions};
+              $.post( "/addDirection", function(data) {
+                });
+                  //console.log(myRoute.steps[i].instructions)
+              }
+            }
+        
+
+
+
 
             /*
             // writing to excel file 

@@ -9,7 +9,7 @@ var coordinates = [
 { "startLat":-1.9450620, "startLong":30.0516490, "endLat":-1.9680230, "endLong":30.1027350},
 { "startLat":-1.9446800, "startLong":30.0510160, "endLat":-1.9400030, "endLong":30.0551470},
 { "startLat":-1.9447918, "startLong":30.0509280, "endLat":-1.9409280, "endLong":30.0435730},
-{ "startLat":-1.9450459, "startLong":30.0512450, "endLat":-1.9446680, "endLong":30.0589590},
+/*{ "startLat":-1.9450459, "startLong":30.0512450, "endLat":-1.9446680, "endLong":30.0589590},
 { "startLat":-1.9452804, "startLong":30.0507890, "endLat":-1.9446680, "endLong":30.0589590},
 { "startLat":-1.9445198, "startLong":30.0507680, "endLat":-1.9407670, "endLong":30.0444850},
 { "startLat":-1.9450614, "startLong":30.0510540, "endLat":-1.9446680, "endLong":30.0589590},
@@ -810,5 +810,5 @@ var coordinates = [
 { "startLat":-1.9750631, "startLong":30.1704350, "endLat":-1.9774490, "endLong":30.1659570},
 { "startLat":-1.9764813, "startLong":30.1700630, "endLat":-1.9786480, "endLong":30.1680030},
 { "startLat":-1.9727671, "startLong":30.1724950, "endLat":-1.9428430, "endLong":30.0600240}
-
+*/
 ];
