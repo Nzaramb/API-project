@@ -13,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.post('/addDirection', function(req, res) {
-	console.log("here " + req)
+	console.log("here " + JSON.stringify(req.body, null, 2))
   res.send('You sent the name "' + req.body + '".');
 });
 
