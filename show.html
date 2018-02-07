@@ -67,14 +67,17 @@
              //var checkboxArray = document.getElementById('waypoints');
             //console.log(result.routes[0].legs[0]);
             var myRoute = result.routes[0].legs[0];
-
-            console.log(myRoute.steps.length);
+            
+            var data = [];
             for (var i = 0; i < myRoute.steps.length; i++) {
-              var data = { "instr": myRoute.steps[i].instructions};
-              $.post( "/addDirection", data, function(res) {
-                });
+              data += [myRoute.steps[i].instructions] ;
                   //console.log(myRoute.steps[i].instructions)
               }
+
+              console.log(data);
+              var json_data = {"instr": data};
+              $.post( "/addDirection", json_data, function(res) {
+                });
             }
         
 

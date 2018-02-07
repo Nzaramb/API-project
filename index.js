@@ -15,12 +15,13 @@ app.get('/', (req, res) => {
 
 
 app.post('/addDirection', function(req, res) {
-	console.log("here: " + req.body.instr)
+	console.log("here: " + req.body.instr);
+	fs.appendFile("datafile.txt", req.body.instr);
+	//fs.writeFile("datafile.txt", req.body.instr);
 	//res.send('You sent the name "' + req.body + '".');
 });
 
-//fs.writeFile("datafile.txt", dat)	
-
+	
 app.listen(3000, () => {
   console.log('Web App running on port 3000!');
 });
