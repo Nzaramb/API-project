@@ -16,7 +16,8 @@ app.get('/', (req, res) => {
 
 app.post('/addDirection', function(req, res) {
 	console.log("here: " + req.body.instr);
-	fs.appendFile("datafile.txt", req.body.instr);
+	fs.appendFile("datafile.txt", req.body.instr +'\r\n');
+	//fs.appendFile("datafile.txt", '\r\n');
 	//fs.writeFile("datafile.txt", req.body.instr);
 	//res.send('You sent the name "' + req.body + '".');
 });
