@@ -66,20 +66,17 @@
             directionsRenderer.setPanel(document.getElementById("directions_detail")); //display textual directions
              //var checkboxArray = document.getElementById('waypoints');
             //console.log(result.routes[0].legs[0]);
-            var myRoute = result.routes[0].legs[0]
+            var myRoute = result.routes[0].legs[0];
 
-
-             for (var i = 0; i < myRoute.steps.length; i++) {
+            console.log(myRoute.steps.length);
+            for (var i = 0; i < myRoute.steps.length; i++) {
               var data = { "instr": myRoute.steps[i].instructions};
-              $.post( "/addDirection", function(data) {
+              $.post( "/addDirection", data, function(res) {
                 });
                   //console.log(myRoute.steps[i].instructions)
               }
             }
         
-
-
-
 
             /*
             // writing to excel file 
