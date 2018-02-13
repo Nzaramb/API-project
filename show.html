@@ -40,6 +40,13 @@
       <option value="BICYCLING">Bicycling</option>
       <option value="TRANSIT">Transit</option>
     </select>
+    <b>Time of travel: </b>
+    <select id="time">
+      <option value="1">4AM - 6AM</option>
+     <option value="2">6AM - 8AM</option>
+     <option value="3">8AM - 10AM</option>
+     <option value="4">10AM - 12PM</option>
+    </select>
     </div>
     <!--<div id="directions_detail"></div>--> <!-- display textual directions on the map-->
     <div id="map"></div>
@@ -48,7 +55,7 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5jMe-RxMEN4ECFgDH5j51ulFe_UZmfGA&callback=initMap">
     </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!-- to use the jquery library-->
     <script>
       var delay = 0;
       
@@ -57,10 +64,12 @@
           //var transitLayer = new google.maps.TransitLayer();
           //transitLayer.setMap(map);
           var directionsService = new google.maps.DirectionsService;
+          var directionsRenderer = new google.maps.DirectionsRenderer();
+
 
 
          function renderDirections(result) {
-            var directionsRenderer = new google.maps.DirectionsRenderer();
+            
             directionsRenderer.setMap(map);
             directionsRenderer.setDirections(result);
             directionsRenderer.setPanel(document.getElementById("directions_detail")); //display textual directions
@@ -117,12 +126,55 @@
                       }
             });
           }
+
+          document.getElementById('time').addEventListener('change', function() {
+              changetime();
+            });
+
+          function changetime (){
+              //directionsRenderer.setMap(null);
+            console.log('Am here')
+            var selectedTime = document.getElementById('time').value;
+            console.log(selectedTime)
+
+            var timeRange =[
+              {"Range": 1, "start":4, "end": 6}, 
+              {"Range": 2, "start":6, "end":8},
+              {"Range": 3, "start":8, "end": 10}
+            ]
+              
           
-        for (var i = 0; i < coordinates.length; i++) {
-           requestDirections(coordinates[i].startLat, coordinates[i].startLong, 
-                              coordinates[i].endLat, coordinates[i].endLong);
+          for (var i = 0; i < coordinates.length; i++) {
+            if ((coordinates[i].jobgo >= timeRange[selectedTime-1].start && coordinates[i].jobgo < timeRange[selectedTime-1].end ) || (coordinates[i].jobleave >= timeRange[selectedTime-1].start && coordinates[i].jobleave < timeRange[selectedTime-1].end )){
+
+               requestDirections(coordinates[i].startLat, coordinates[i].startLong, 
+                                coordinates[i].endLat, coordinates[i].endLong);
+             }
+                
+            }
+
+          }
+
+
+           var selectedTime = document.getElementById('time').value;
+            console.log(selectedTime)
+
+            var timeRange =[
+              {"Range": 1, "start":4, "end": 6}, 
+              {"Range": 2, "start":6, "end":8},
+              {"Range": 3, "start":8, "end": 10}
+            ]
+          for (var i = 0; i < coordinates.length; i++) {
+            if ((coordinates[i].jobgo >= timeRange[selectedTime-1].start && coordinates[i].jobgo < timeRange[selectedTime-1].end ) || (coordinates[i].jobleave >= timeRange[selectedTime-1].start && coordinates[i].jobleave < timeRange[selectedTime-1].end )){
+
+               requestDirections(coordinates[i].startLat, coordinates[i].startLong, 
+                                coordinates[i].endLat, coordinates[i].endLong);
+             }
+                
+            }
+          
       }
-    }
+    //}
 
 
         //setTimeout(requestDirections,2000)
