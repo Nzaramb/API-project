@@ -73,8 +73,8 @@
           //transitLayer.setMap(map);
           var directionsService = new google.maps.DirectionsService;
           var directionsDisplay;
-          
-         function renderDirections(result) {
+
+         function renderDirections(id, result) {
             directionsDisplay = new google.maps.DirectionsRenderer();
              directionsDisplay.setMap(map);
             directionsDisplay.setDirections(result);
@@ -83,10 +83,10 @@
             //console.log(result.routes[0].legs[0]);
             var myRoute = result.routes[0].legs[0];
             
-            var data = [];
+            var data = id + ',';
             for (var i = 0; i < myRoute.steps.length; i++) {
-              data += myRoute.steps[i].instructions +',';
-                  //console.log(myRoute.steps[i].instructions)
+              data += myRoute.steps[i].instructions +',';  //loop through the array putting directions on one line
+                  console.log(myRoute.steps[i].instructions)
               }
 
               console.log(data);
@@ -108,16 +108,19 @@
             colCount = 1;
             app.Cells.Item(1,1).Value2 = "test";  */
 
-           function requestDirections(startLat, startLong, endLat, endLong) {
+           function requestDirections(id, startLat, startLong, endLat, endLong) {
             var selectedMode = document.getElementById('mode').value;
+            var thisId = id
             directionsService.route({
               origin: {lat: startLat, lng: startLong},
               destination: {lat: endLat, lng: endLong},
               //travelMode: google.maps.DirectionsTravelMode.DRIVING 
               travelMode: google.maps.TravelMode[selectedMode] //google.maps.TravelMode[selectedMode]
             }, function(result, status) {
+              
                if (status == "OK") {
-                renderDirections(result);
+                console.log(thisId);
+                renderDirections(thisId, result);
                } else {
                         
                        if (status == "OVER_QUERY_LIMIT") {
@@ -187,7 +190,7 @@
                 if (((coordinates[i].jobgo >= timeRange[selectedTime-1].start && coordinates[i].jobgo < timeRange[selectedTime-1].end ) || (coordinates[i].jobleave >= timeRange[selectedTime-1].start && coordinates[i].jobleave < timeRange[selectedTime-1].end )) && coordinates[i].transport == selectedindex)
                 {
                   console.log("Run for loop "+ i)
-                   requestDirections(coordinates[i].startLat, coordinates[i].startLong, 
+                   requestDirections(coordinates[i].id, coordinates[i].startLat, coordinates[i].startLong, 
                                     coordinates[i].endLat, coordinates[i].endLong);
                 }
                     
