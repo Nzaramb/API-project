@@ -72,12 +72,13 @@
           //var transitLayer = new google.maps.TransitLayer();
           //transitLayer.setMap(map);
           var directionsService = new google.maps.DirectionsService;
-          var directionsDisplay;
+          var directionsDisplay = [];
 
          function renderDirections(id, result) {
-            directionsDisplay = new google.maps.DirectionsRenderer();
-             directionsDisplay.setMap(map);
-            directionsDisplay.setDirections(result);
+            directionsDisplay.push(new google.maps.DirectionsRenderer());
+            console.log(directionsDisplay);
+             directionsDisplay[directionsDisplay.length-1].setMap(map);
+            directionsDisplay[directionsDisplay.length-1].setDirections(result);
             //directionsRenderer.setPanel(document.getElementById("directions_detail")); //display textual directions
              //var checkboxArray = document.getElementById('waypoints');
             //console.log(result.routes[0].legs[0]);
@@ -121,18 +122,16 @@
                if (status == "OK") {
                 console.log(thisId);
                 renderDirections(thisId, result);
-               } else {
+               }else{
                         
-                       if (status == "OVER_QUERY_LIMIT") {
-                        
+                      if (status == "OVER_QUERY_LIMIT") {
                         delay++;
-                       setTimeout(function () {
-                        requestDirections(startLat, startLong, endLat, endLong);}, delay * 1000);
-                       } else {
-                          console.log("Directions request failed:" + status);
-                       }
-                        
-                      }
+                        setTimeout(function () {
+                        requestDirections(thisId, startLat, startLong, endLat, endLong);}, delay * 1000);
+                      }else {
+                        console.log("Directions request failed:" + status);
+                      } 
+                    }
             });
           }
 
@@ -144,13 +143,16 @@
             });
 
         function onSelectChange (){
-              if (directionsDisplay) {
-               directionsDisplay.setMap(null)
+              if (directionsDisplay.length > 0) {
+                for (var i=0; i < directionsDisplay.length; i++){
+                  directionsDisplay[i].setMap(null);
+                }
+               console.log("Clearing routes on the map");
 
             }
               //directionsDisplay.setMap(null);
               var selectedTime = document.getElementById('time').value;
-              console.log(selectedTime)
+              console.log("selected time: "+selectedTime)
 
               var selectedMode = document.getElementById('mode').value;
               console.log("mode selected "+ selectedMode)
