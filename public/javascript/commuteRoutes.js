@@ -8,8 +8,8 @@ var coordinates = [
 { id: 1101010317 , startLat: -1.9456731, startLong: 30.051949, endLat: -1.944869 , endLong: 30.057053,  jobgo: 7, jobleave: 17 , transport: 1},
 { id: 1101010318 , startLat: -1.9444383, startLong: 30.051241, endLat: -1.946804 , endLong: 30.056954,  jobgo: 6, jobleave: 22 , transport: 2},
 { id: 1101010401 , startLat: -1.945062, startLong: 30.051649, endLat: -1.968023 , endLong: 30.102735,  jobgo: 6, jobleave: 17 , transport: 1},
-{ id: 1101010403 , startLat: -1.94468, startLong: 30.051016, endLat: -1.940003 , endLong: 30.055147,  jobgo: 8, jobleave: 17 , transport: 1}
-/*{ id: 1101010405 , startLat: -1.9447918, startLong: 30.050928, endLat: -1.940928 , endLong: 30.043573,  jobgo: 5, jobleave: 22 , transport: 2},
+{ id: 1101010403 , startLat: -1.94468, startLong: 30.051016, endLat: -1.940003 , endLong: 30.055147,  jobgo: 8, jobleave: 17 , transport: 1},
+{ id: 1101010405 , startLat: -1.9447918, startLong: 30.050928, endLat: -1.940928 , endLong: 30.043573,  jobgo: 5, jobleave: 22 , transport: 2},
 { id: 1101010408 , startLat: -1.9450459, startLong: 30.051245, endLat: -1.944668 , endLong: 30.058959,  jobgo: 7, jobleave: 20 , transport: 1},
 { id: 1101010410 , startLat: -1.9452804, startLong: 30.050789, endLat: -1.944668 , endLong: 30.058959,  jobgo: 5, jobleave: 17 , transport: 2},
 { id: 1101010412 , startLat: -1.9445198, startLong: 30.050768, endLat: -1.940767 , endLong: 30.044485,  jobgo: 10, jobleave: 13 , transport: 1},
@@ -792,5 +792,5 @@ var coordinates = [
 { id: 1310010912 , startLat: -1.9754164, startLong: 30.169128, endLat: -1.976374 , endLong: 30.165602,  jobgo: 6, jobleave: 19 , transport: 2},
 { id: 1310010913 , startLat: -1.9750631, startLong: 30.170435, endLat: -1.977449 , endLong: 30.165957,  jobgo: 6, jobleave: 18 , transport: 2},
 { id: 1310010917 , startLat: -1.9764813, startLong: 30.170063, endLat: -1.978648 , endLong: 30.168003,  jobgo: 6, jobleave: 6 , transport: 2},
-{ id: 1310010920 , startLat: -1.9727671, startLong: 30.172495, endLat: -1.942843 , endLong: 30.060024,  jobgo: 6, jobleave: 7 , transport: 1}*/
+{ id: 1310010920 , startLat: -1.9727671, startLong: 30.172495, endLat: -1.942843 , endLong: 30.060024,  jobgo: 6, jobleave: 7 , transport: 1}
 ];

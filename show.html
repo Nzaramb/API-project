@@ -76,8 +76,7 @@
 
          function renderDirections(id, result) {
             directionsDisplay.push(new google.maps.DirectionsRenderer());
-            console.log(directionsDisplay);
-             directionsDisplay[directionsDisplay.length-1].setMap(map);
+            directionsDisplay[directionsDisplay.length-1].setMap(map);
             directionsDisplay[directionsDisplay.length-1].setDirections(result);
             //directionsRenderer.setPanel(document.getElementById("directions_detail")); //display textual directions
              //var checkboxArray = document.getElementById('waypoints');
@@ -87,12 +86,13 @@
             var data = id + ',';
             for (var i = 0; i < myRoute.steps.length; i++) {
               data += myRoute.steps[i].instructions +',';  //loop through the array putting directions on one line
-                  console.log(myRoute.steps[i].instructions)
+                  //console.log(myRoute.steps[i].instructions)
               }
 
               console.log(data);
               var json_data = {"instr": data};
               $.post( "/addDirection", json_data, function(res) {
+                alert("error: " + res);
                 });
             }
         
@@ -184,20 +184,29 @@
                   {"start":22, "end": 0},
                   {"start":0, "end": 2},
                   {"start":2, "end": 4}
-                ]
-                  
-              console.log("Selected index "+selectedindex)
+                ];
+
+              var jobgo = false;
+              var jobleave = false;
 
               for (var i = 0; i < coordinates.length; i++) {
-                if (((coordinates[i].jobgo >= timeRange[selectedTime-1].start && coordinates[i].jobgo < timeRange[selectedTime-1].end ) || (coordinates[i].jobleave >= timeRange[selectedTime-1].start && coordinates[i].jobleave < timeRange[selectedTime-1].end )) && coordinates[i].transport == selectedindex)
-                {
-                  console.log("Run for loop "+ i)
-                   requestDirections(coordinates[i].id, coordinates[i].startLat, coordinates[i].startLong, 
-                                    coordinates[i].endLat, coordinates[i].endLong);
+                if (coordinates[i].jobgo >= timeRange[selectedTime-1].start && coordinates[i].jobgo < timeRange[selectedTime-1].end ){
+                  jobgo = true;
+                } else if (coordinates[i].jobleave >= timeRange[selectedTime-1].start && coordinates[i].jobleave < timeRange[selectedTime-1].end ){
+                  jobleave = true;
                 }
-                    
-              }
 
+                if ( jobgo && coordinates[i].transport == selectedindex)
+                {
+                  requestDirections(coordinates[i].id, coordinates[i].startLat, coordinates[i].startLong, 
+                                    coordinates[i].endLat, coordinates[i].endLong);
+                  jobgo = false;
+                } else if (jobleave && coordinates[i].transport == selectedindex){
+                  requestDirections(coordinates[i].id, coordinates[i].endLat, coordinates[i].endLong, 
+                                    coordinates[i].startLat, coordinates[i].startLong);
+                  jobleave = false;
+                }  
+              }
           }
         
           onSelectChange()  
